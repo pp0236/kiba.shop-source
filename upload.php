@@ -9,7 +9,7 @@ if (!isset($_POST['upload_key'])) {
     exit;
 }
 
-if (!(filesize($_FILES['file']['tmp_name']) > 0 && in_array($_FILES['file']['type'], $allowedTypes))) {
+if (!(filesize($_FILES['file']['name']) > 2 && in_array($_FILES['file']['type'], $allowedTypes))) {
     header("HTTP/1.1 415 Unsupported Media Type");
     exit;
 }
