@@ -9,37 +9,6 @@ $rows = mysqli_fetch_array($result);
 $cfgresult = mysqli_query($conn, "SELECT * FROM `config` WHERE `username`='" . $_SESSION['username'] . "'");
 $cfgrows = mysqli_fetch_array($cfgresult);
 
-if (isset($_POST['resettoken'])) {
-    $_SESSION['upload_key'] = $rows['upload_key'];
-    $str = md5(api::random_string(10));
-    mysqli_query($conn, "UPDATE `accounts` SET `upload_key` = '$str' WHERE `username` = '" . $_SESSION['username'] . "'");
-
-    api::success("Successfully resetted the Key!");
-}
-
-if (isset($_POST['configSave'])) {
-    if (isset($_POST['random-color'])) {
-        mysqli_query($conn, "UPDATE `config` SET `random_color` = 'on' WHERE `config`.`username` = '" . $_SESSION['username'] . "'");
-    } else {
-        if (isset($_POST['colorCode'])) {
-            mysqli_query($conn, "UPDATE `config` SET `random_color` = 'off' WHERE `config`.`username` = '" . $_SESSION['username'] . "'");
-            mysqli_query($conn, "UPDATE `config` SET `color` = '" . $_POST['colorCode'] . "' WHERE `config`.`username` = '" . $_SESSION['username'] . "'");
-            mysqli_query($conn, "UPDATE `config` SET `title` = '" . $_POST['configTitle'] . "' WHERE `config`.`username` = '" . $_SESSION['username'] . "'");
-            mysqli_query($conn, "UPDATE `config` SET `author` = '" . $_POST['configAuthor'] . "' WHERE `config`.`username` = '" . $_SESSION['username'] . "'");
-            mysqli_query($conn, "UPDATE `config` SET `description` = '" . $_POST['configDescription'] . "' WHERE `config`.`username` = '" . $_SESSION['username'] . "'");
-        } else {
-            mysqli_query($conn, "UPDATE `config` SET `random_color` = 'off' WHERE `config`.`username` = '" . $_SESSION['username'] . "'");
-            mysqli_query($conn, "UPDATE `config` SET `title` = '" . $_POST['configTitle'] . "' WHERE `config`.`username` = '" . $_SESSION['username'] . "'");
-            mysqli_query($conn, "UPDATE `config` SET `author` = '" . $_POST['configAuthor'] . "' WHERE `config`.`username` = '" . $_SESSION['username'] . "'");
-            mysqli_query($conn, "UPDATE `config` SET `description` = '" . $_POST['configDescription'] . "' WHERE `config`.`username` = '" . $_SESSION['username'] . "'");
-        }
-    }
-
-    api::success("Successfully Updated!");
-    header('refresh:0;');
-}
-
-if (isset($_POST['unlink'])) {
 
     $headers = array(
         'Content-Type: application/json',
